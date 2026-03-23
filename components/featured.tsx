@@ -92,121 +92,92 @@ export default function Featured() {
 
   return (
     <section id="sobre" className="bg-background">
-      {/* About section */}
-      <div className="flex flex-col lg:flex-row lg:items-stretch min-h-screen">
-        {/* Image side */}
-        <div className="flex-1 h-[50vh] lg:h-auto relative">
-          <Image
-            src="/images/kiri-family.jpg"
-            alt="Familia celebrando con una cuenta Kiri"
-            fill
-            className="object-cover"
-          />
-          <div className="absolute inset-0 bg-primary/20" />
+      {/* About / How it works — full-bleed slideshow */}
+      <div id="como-funciona" className="bg-muted">
+        {/* Section header */}
+        <div className="px-8 md:px-12 lg:px-20 pt-24 pb-12 text-center">
+          <p className="text-sm uppercase tracking-[0.2em] text-primary font-semibold mb-3">Cómo funciona</p>
+          <h2 className="font-serif text-3xl md:text-4xl lg:text-5xl font-bold text-foreground text-balance">
+            Tres pasos para garantizar su futuro
+          </h2>
         </div>
 
-        {/* Content side */}
-        <div className="flex-1 bg-muted flex flex-col justify-center px-8 md:px-12 lg:px-16 py-16">
-          <p className="text-sm uppercase tracking-[0.2em] text-primary font-semibold mb-3">Sobre Kiri</p>
-          <h2 className="font-serif text-3xl md:text-4xl lg:text-5xl font-bold text-foreground mb-6 leading-tight text-balance">
-            Más que un producto financiero, una experiencia familiar
-          </h2>
-          <p className="text-muted-foreground leading-relaxed mb-8 text-base md:text-lg max-w-lg">
-            Kiri es una cuenta de inversión para niños y adolescentes de 0 a 18 años que ayuda a las familias a
-            construir un futuro financiero con propósito. Cada cuenta incluye un kit de bienvenida y seguimiento
-            anual, fortaleciendo el lazo emocional con quienes aportan.
-          </p>
-
-          {/* Slideshow */}
-          <div className="relative mb-8">
-            <div className="overflow-hidden rounded-2xl bg-background border border-border">
-              <div
-                className="flex transition-transform duration-500 ease-out"
-                style={{ transform: `translateX(-${currentSlide * 100}%)` }}
-              >
-                {slides.map((slide) => (
-                  <div key={slide.number} className="min-w-full p-8">
-                    <div className="flex items-start gap-6">
-                      <div className="flex-shrink-0 w-14 h-14 rounded-xl bg-primary/10 flex items-center justify-center">
-                        <slide.icon className="w-7 h-7 text-primary" />
-                      </div>
-                      <div className="flex-1">
-                        <span className="text-xs font-bold text-primary/60 tracking-widest uppercase">
-                          Paso {slide.number}
-                        </span>
-                        <h3 className="font-semibold text-xl text-foreground mt-1 mb-3">{slide.title}</h3>
-                        <p className="text-muted-foreground leading-relaxed">{slide.description}</p>
-                      </div>
-                    </div>
-                  </div>
-                ))}
-              </div>
-            </div>
-
-            <button
-              onClick={prevSlide}
-              className="absolute left-0 top-1/2 -translate-y-1/2 -translate-x-4 w-10 h-10 rounded-full bg-background border border-border shadow-lg flex items-center justify-center text-foreground hover:bg-muted transition-colors"
-              aria-label="Diapositiva anterior"
-            >
-              <ChevronLeft className="w-5 h-5" />
-            </button>
-            <button
-              onClick={() => { nextSlide(); setIsAutoPlaying(false) }}
-              className="absolute right-0 top-1/2 -translate-y-1/2 translate-x-4 w-10 h-10 rounded-full bg-background border border-border shadow-lg flex items-center justify-center text-foreground hover:bg-muted transition-colors"
-              aria-label="Siguiente diapositiva"
-            >
-              <ChevronRight className="w-5 h-5" />
-            </button>
-
-            <div className="flex justify-center gap-2 mt-6">
-              {slides.map((_, index) => (
-                <button
-                  key={index}
-                  onClick={() => goToSlide(index)}
-                  className={`h-2.5 rounded-full transition-all duration-300 ${
-                    index === currentSlide ? "bg-primary w-8" : "w-2.5 bg-primary/30 hover:bg-primary/50"
-                  }`}
-                  aria-label={`Ir a diapositiva ${index + 1}`}
-                />
-              ))}
-            </div>
-          </div>
-
-          <a
-            href="#como-funciona"
-            className="w-fit bg-primary text-primary-foreground px-7 py-3 rounded-full text-sm font-semibold hover:bg-accent transition-colors duration-300"
+        {/* Slide track */}
+        <div className="relative overflow-hidden pb-20">
+          <div
+            className="flex transition-transform duration-500 ease-out"
+            style={{ transform: `translateX(-${currentSlide * 100}%)` }}
           >
-            Cómo funciona
-          </a>
-        </div>
-      </div>
+            {slides.map((slide) => (
+              <div
+                key={slide.number}
+                className="min-w-full px-8 md:px-12 lg:px-20"
+              >
+                <div className="max-w-5xl mx-auto flex flex-col lg:flex-row items-center gap-12 lg:gap-20">
+                  {/* Illustration */}
+                  <div className="flex-shrink-0 w-64 h-64 md:w-80 md:h-80 relative">
+                    <Image
+                      src={slide.image}
+                      alt={slide.title}
+                      fill
+                      className="object-contain drop-shadow-xl"
+                    />
+                  </div>
 
-      {/* How it works */}
-      <div id="como-funciona" className="px-8 md:px-12 lg:px-20 py-24 bg-background">
-        <div className="max-w-6xl mx-auto">
-          <p className="text-sm uppercase tracking-[0.2em] text-primary font-semibold mb-3 text-center">Pasos</p>
-          <h2 className="font-serif text-3xl md:text-4xl lg:text-5xl font-bold text-foreground mb-16 text-center text-balance">
-            Cómo funciona Kiri
-          </h2>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 lg:gap-12">
-            {slides.map((step) => (
-              <div key={step.number} className="bg-muted rounded-2xl p-8 border border-border flex flex-col items-center text-center">
-                <div className="w-40 h-40 relative mb-6 flex-shrink-0">
-                  <Image
-                    src={step.image}
-                    alt={step.title}
-                    fill
-                    className="object-contain"
-                  />
+                  {/* Text */}
+                  <div className="flex-1 text-center lg:text-left">
+                    <span className="font-serif text-8xl md:text-9xl font-bold text-primary/10 leading-none block">
+                      {slide.number}
+                    </span>
+                    <div className="flex items-center gap-3 justify-center lg:justify-start -mt-4 mb-5">
+                      <div className="w-10 h-10 rounded-xl bg-primary/10 flex items-center justify-center flex-shrink-0">
+                        <slide.icon className="w-5 h-5 text-primary" />
+                      </div>
+                      <h3 className="font-serif text-2xl md:text-3xl font-bold text-foreground leading-tight">
+                        {slide.title}
+                      </h3>
+                    </div>
+                    <p className="text-muted-foreground leading-relaxed text-base md:text-lg max-w-lg mx-auto lg:mx-0">
+                      {slide.description}
+                    </p>
+                  </div>
                 </div>
-                <span className="font-serif text-5xl font-bold text-primary/20 leading-none">
-                  {step.number}
-                </span>
-                <h3 className="font-semibold text-xl text-foreground mt-4 mb-3">{step.title}</h3>
-                <p className="text-muted-foreground leading-relaxed">{step.description}</p>
               </div>
             ))}
           </div>
+
+          {/* Prev / Next arrows */}
+          <button
+            onClick={prevSlide}
+            className="absolute left-4 md:left-8 top-1/2 -translate-y-1/2 w-11 h-11 rounded-full bg-background border border-border shadow-md flex items-center justify-center text-foreground hover:bg-primary hover:text-primary-foreground hover:border-primary transition-colors duration-200"
+            aria-label="Diapositiva anterior"
+          >
+            <ChevronLeft className="w-5 h-5" />
+          </button>
+          <button
+            onClick={() => { nextSlide(); setIsAutoPlaying(false) }}
+            className="absolute right-4 md:right-8 top-1/2 -translate-y-1/2 w-11 h-11 rounded-full bg-background border border-border shadow-md flex items-center justify-center text-foreground hover:bg-primary hover:text-primary-foreground hover:border-primary transition-colors duration-200"
+            aria-label="Siguiente diapositiva"
+          >
+            <ChevronRight className="w-5 h-5" />
+          </button>
+        </div>
+
+        {/* Dot indicators */}
+        <div className="flex justify-center gap-3 pb-20">
+          {slides.map((slide, index) => (
+            <button
+              key={index}
+              onClick={() => goToSlide(index)}
+              className={`h-2.5 rounded-full transition-all duration-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary ${
+                index === currentSlide
+                  ? "bg-primary w-10"
+                  : "w-2.5 bg-primary/25 hover:bg-primary/50"
+              }`}
+              aria-label={`Ir al paso ${index + 1}: ${slide.title}`}
+              aria-current={index === currentSlide ? "true" : undefined}
+            />
+          ))}
         </div>
       </div>
 
