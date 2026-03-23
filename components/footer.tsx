@@ -1,4 +1,5 @@
 import Link from "next/link"
+import Image from "next/image"
 
 const testimonials = [
   {
@@ -146,6 +147,12 @@ export default function Footer() {
                   >
                     Testimonios
                   </Link>
+                  <Link
+                    href="#medios"
+                    className="text-purple-100 hover:text-white transition-colors duration-300 text-sm sm:text-base"
+                  >
+                    En los Medios
+                  </Link>
                 </div>
                 <div className="flex flex-col gap-1 sm:gap-2">
                   <h3 className="mb-1 sm:mb-2 uppercase text-purple-400 text-xs sm:text-sm tracking-widest font-semibold">
@@ -172,9 +179,15 @@ export default function Footer() {
                 </div>
               </div>
               <div className="flex flex-col sm:flex-row justify-between items-start sm:items-end gap-4 sm:gap-0">
-                <h1 className="text-[18vw] sm:text-[16vw] lg:text-[14vw] leading-[0.8] mt-4 sm:mt-6 lg:mt-10 text-white font-serif font-bold tracking-tight">
-                  Kiri
-                </h1>
+                <div className="mt-4 sm:mt-6 lg:mt-10">
+                  <Image
+                    src="/images/kiri-logo.svg"
+                    alt="Kiri"
+                    width={280}
+                    height={176}
+                    className="brightness-0 invert w-32 sm:w-48 lg:w-64 h-auto"
+                  />
+                </div>
                 <p className="text-purple-400 text-sm sm:text-base">© {new Date().getFullYear()} Kiri. Agente Financiero de MyInvestor.</p>
               </div>
             </div>
