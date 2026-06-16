@@ -88,12 +88,30 @@ function matchResponse(text: string): string {
   return FALLBACK
 }
 
+// ─── Related follow-up suggestions per FAQ ───────────────────────────────────
+
+const FOLLOW_UPS: Record<string, string[]> = {
+  "quien-declara":     ["donacion-fiscal", "obligaciones-tutor", "irpf-menor"],
+  "donacion-fiscal":   ["quien-declara", "irpf-menor", "obligaciones-tutor"],
+  "irpf-menor":        ["donacion-fiscal", "quien-declara", "mayoria-edad"],
+  "tutor-dispone":     ["obligaciones-tutor", "cancelar-cuenta", "un-representante"],
+  "obligaciones-tutor":["tutor-dispone", "irpf-menor", "donacion-fiscal"],
+  "mayoria-edad":      ["productos", "cancelar-cuenta", "condiciones"],
+  "documentos":        ["necesito-cuenta", "un-representante", "condiciones"],
+  "productos":         ["condiciones", "mayoria-edad", "cancelar-cuenta"],
+  "cancelar-cuenta":   ["tutor-dispone", "productos", "un-representante"],
+  "un-representante":  ["documentos", "necesito-cuenta", "cancelar-cuenta"],
+  "necesito-cuenta":   ["documentos", "condiciones", "productos"],
+  "condiciones":       ["productos", "necesito-cuenta", "mayoria-edad"],
+}
+
 // ─── Types ────────────────────────────────────────────────────────────────────
 
 type MessageRole = "genie" | "user"
 interface Message {
   role: MessageRole
   text: string
+  followUpIds?: string[]  // IDs of follow-up suggestions shown after this genie message
 }
 
 const GREETING: Message = {
@@ -108,6 +126,8 @@ export default function GenieChat() {
   const [messages, setMessages] = useState<Message[]>([GREETING])
   const [input, setInput] = useState("")
   const [faqsShown, setFaqsShown] = useState(true)
+  const [isTyping, setIsTyping] = useState(false)
+  const messagesRef = useRef<HTMLDivElement>(null)
   const bottomRef = useRef<HTMLDivElement>(null)
   const inputRef = useRef<HTMLInputElement>(null)
   const hoverTimer = useRef<ReturnType<typeof setTimeout> | null>(null)
@@ -115,7 +135,7 @@ export default function GenieChat() {
   // Scroll to bottom on new messages
   useEffect(() => {
     bottomRef.current?.scrollIntoView({ behavior: "smooth" })
-  }, [messages])
+  }, [messages, isTyping])
 
   // Focus input when panel opens
   useEffect(() => {
@@ -133,16 +153,18 @@ export default function GenieChat() {
     if (hoverTimer.current) clearTimeout(hoverTimer.current)
   }, [])
 
-  const addMessage = (role: MessageRole, text: string) => {
-    setMessages((prev) => [...prev, { role, text }])
+  const addGenieMessage = (text: string, followUpIds?: string[]) => {
+    setIsTyping(false)
+    setMessages((prev) => [...prev, { role: "genie", text, followUpIds }])
   }
 
   const handleFAQ = (id: string) => {
     const faq = FAQS.find((f) => f.id === id)
     if (!faq) return
     setFaqsShown(false)
-    addMessage("user", faq.label)
-    setTimeout(() => addMessage("genie", RESPONSES[id]), 420)
+    setMessages((prev) => [...prev, { role: "user", text: faq.label }])
+    setIsTyping(true)
+    setTimeout(() => addGenieMessage(RESPONSES[id], FOLLOW_UPS[id]), 620)
   }
 
   const handleSend = () => {
@@ -150,8 +172,17 @@ export default function GenieChat() {
     if (!trimmed) return
     setFaqsShown(false)
     setInput("")
-    addMessage("user", trimmed)
-    setTimeout(() => addMessage("genie", matchResponse(trimmed)), 420)
+    setMessages((prev) => [...prev, { role: "user", text: trimmed }])
+    setIsTyping(true)
+    // Find best matching FAQ id to show follow-ups
+    const lower = trimmed.toLowerCase()
+    let matchedId: string | undefined
+    for (const { keys, id } of KEYWORD_MAP) {
+      if (keys.some((k) => lower.includes(k))) { matchedId = id; break }
+    }
+    const response = matchedId ? RESPONSES[matchedId] : FALLBACK
+    const followUps = matchedId ? FOLLOW_UPS[matchedId] : undefined
+    setTimeout(() => addGenieMessage(response, followUps), 620)
   }
 
   const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
@@ -161,6 +192,7 @@ export default function GenieChat() {
   const resetChat = () => {
     setMessages([GREETING])
     setFaqsShown(true)
+    setIsTyping(false)
     setInput("")
   }
 
@@ -175,13 +207,13 @@ export default function GenieChat() {
             animate={{ opacity: 1, y: 0, scale: 1 }}
             exit={{ opacity: 0, y: 12, scale: 0.95 }}
             transition={{ duration: 0.22, ease: [0.22, 1, 0.36, 1] }}
-            className="w-[22rem] sm:w-96 bg-white rounded-3xl shadow-2xl border border-border flex flex-col overflow-hidden"
-            style={{ maxHeight: "min(80vh, 600px)" }}
+            className="w-[22rem] sm:w-96 bg-white rounded-3xl shadow-2xl border border-border flex flex-col"
+            style={{ height: "min(82vh, 580px)" }}
             role="dialog"
             aria-label="Chat con el Genio de Kiri"
           >
             {/* Header */}
-            <div className="flex items-center gap-3 px-4 py-3 bg-primary text-primary-foreground flex-shrink-0">
+            <div className="flex items-center gap-3 px-4 py-3 bg-primary text-primary-foreground flex-shrink-0 rounded-t-3xl">
               <div className="w-9 h-9 rounded-full bg-white/20 overflow-hidden flex-shrink-0">
                 <Image
                   src="/images/genio-kiri.png"
@@ -214,37 +246,56 @@ export default function GenieChat() {
               </div>
             </div>
 
-            {/* Messages */}
-            <div className="flex-1 overflow-y-auto px-4 py-4 space-y-3 bg-[hsl(270,100%,97%)]">
+            {/* Messages — scrollable */}
+            <div
+              ref={messagesRef}
+              className="flex-1 overflow-y-auto px-4 py-4 space-y-3 bg-[hsl(270,100%,97%)]"
+              style={{ overscrollBehavior: "contain" }}
+            >
               {messages.map((msg, i) => (
-                <div
-                  key={i}
-                  className={`flex gap-2 ${msg.role === "user" ? "justify-end" : "justify-start"}`}
-                >
-                  {msg.role === "genie" && (
-                    <div className="w-7 h-7 rounded-full overflow-hidden flex-shrink-0 mt-1 bg-primary/10">
-                      <Image
-                        src="/images/genio-kiri.png"
-                        alt=""
-                        width={28}
-                        height={28}
-                        className="object-cover w-full h-full"
-                      />
+                <div key={i} className="flex flex-col gap-2">
+                  <div className={`flex gap-2 ${msg.role === "user" ? "justify-end" : "justify-start"}`}>
+                    {msg.role === "genie" && (
+                      <div className="w-7 h-7 rounded-full overflow-hidden flex-shrink-0 mt-1 bg-primary/10">
+                        <Image src="/images/genio-kiri.png" alt="" width={28} height={28} className="object-cover w-full h-full" />
+                      </div>
+                    )}
+                    <div
+                      className={`max-w-[75%] rounded-2xl px-3.5 py-2.5 text-sm leading-relaxed ${
+                        msg.role === "genie"
+                          ? "bg-white text-foreground rounded-tl-sm shadow-sm border border-border"
+                          : "bg-primary text-primary-foreground rounded-tr-sm"
+                      }`}
+                    >
+                      {msg.text}
+                    </div>
+                  </div>
+
+                  {/* Follow-up suggestions after each genie response (except greeting) */}
+                  {msg.role === "genie" && msg.followUpIds && msg.followUpIds.length > 0 && (
+                    <div className="ml-9 flex flex-col gap-1.5">
+                      <p className="text-xs text-muted-foreground">Puede que también te interese:</p>
+                      <div className="flex flex-wrap gap-1.5">
+                        {msg.followUpIds.map((id) => {
+                          const faq = FAQS.find((f) => f.id === id)
+                          if (!faq) return null
+                          return (
+                            <button
+                              key={id}
+                              onClick={() => handleFAQ(id)}
+                              className="text-xs bg-white border border-primary/30 text-primary px-3 py-1.5 rounded-full hover:bg-primary hover:text-primary-foreground transition-colors duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary"
+                            >
+                              {faq.label}
+                            </button>
+                          )
+                        })}
+                      </div>
                     </div>
                   )}
-                  <div
-                    className={`max-w-[75%] rounded-2xl px-3.5 py-2.5 text-sm leading-relaxed ${
-                      msg.role === "genie"
-                        ? "bg-white text-foreground rounded-tl-sm shadow-sm border border-border"
-                        : "bg-primary text-primary-foreground rounded-tr-sm"
-                    }`}
-                  >
-                    {msg.text}
-                  </div>
                 </div>
               ))}
 
-              {/* FAQ chips — shown after greeting */}
+              {/* FAQ chips — shown after greeting only */}
               {faqsShown && (
                 <div className="pt-1">
                   <p className="text-xs text-muted-foreground mb-2 ml-9">Preguntas frecuentes:</p>
@@ -262,11 +313,25 @@ export default function GenieChat() {
                 </div>
               )}
 
+              {/* Typing indicator */}
+              {isTyping && (
+                <div className="flex gap-2 justify-start">
+                  <div className="w-7 h-7 rounded-full overflow-hidden flex-shrink-0 mt-1 bg-primary/10">
+                    <Image src="/images/genio-kiri.png" alt="" width={28} height={28} className="object-cover w-full h-full" />
+                  </div>
+                  <div className="bg-white border border-border rounded-2xl rounded-tl-sm px-4 py-3 shadow-sm flex items-center gap-1">
+                    <span className="w-1.5 h-1.5 bg-primary/50 rounded-full animate-bounce" style={{ animationDelay: "0ms" }} />
+                    <span className="w-1.5 h-1.5 bg-primary/50 rounded-full animate-bounce" style={{ animationDelay: "150ms" }} />
+                    <span className="w-1.5 h-1.5 bg-primary/50 rounded-full animate-bounce" style={{ animationDelay: "300ms" }} />
+                  </div>
+                </div>
+              )}
+
               <div ref={bottomRef} />
             </div>
 
             {/* Input */}
-            <div className="flex items-center gap-2 px-3 py-3 border-t border-border bg-white flex-shrink-0">
+            <div className="flex items-center gap-2 px-3 py-3 border-t border-border bg-white flex-shrink-0 rounded-b-3xl">
               <input
                 ref={inputRef}
                 type="text"
