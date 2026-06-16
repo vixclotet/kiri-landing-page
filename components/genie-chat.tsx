@@ -8,63 +8,73 @@ import { motion, AnimatePresence } from "framer-motion"
 // ─── Hard-coded knowledge base ────────────────────────────────────────────────
 
 const FAQS = [
-  { id: "que-es-kiri",       label: "¿Qué es Kiri?" },
-  { id: "abrir-cuenta",      label: "¿Cómo abro una cuenta?" },
-  { id: "quien-puede",       label: "¿Quién puede abrir una cuenta?" },
-  { id: "myinvestor",        label: "¿Qué es MyInvestor?" },
-  { id: "regalo",            label: "¿Cómo funciona la Tarjeta Regalo?" },
-  { id: "18-anos",           label: "¿Qué pasa a los 18 años?" },
-  { id: "seguridad",         label: "¿Es seguro mi dinero?" },
-  { id: "kit",               label: "¿Qué incluye el Kit de Bienvenida?" },
-  { id: "contribuir",        label: "¿Pueden contribuir familiares?" },
-  { id: "app",               label: "¿Cómo accedo a la app?" },
+  { id: "quien-declara",     label: "¿Quién declara los fondos del menor?" },
+  { id: "donacion-fiscal",   label: "¿Cómo afecta fiscalmente una donación?" },
+  { id: "irpf-menor",        label: "¿Paga impuestos el menor por rendimientos?" },
+  { id: "tutor-dispone",     label: "¿Puede el tutor disponer del dinero?" },
+  { id: "obligaciones-tutor",label: "¿Qué obligaciones fiscales tiene el tutor?" },
+  { id: "mayoria-edad",      label: "¿Qué pasa al cumplir la mayoría de edad?" },
+  { id: "documentos",        label: "¿Qué documentos se necesitan?" },
+  { id: "productos",         label: "¿En qué productos pueden invertir?" },
+  { id: "cancelar-cuenta",   label: "¿Puedo recuperar el dinero si cancelo?" },
+  { id: "un-representante",  label: "¿Puedo añadir un segundo representante?" },
+  { id: "necesito-cuenta",   label: "¿Necesito cuenta en MyInvestor?" },
+  { id: "condiciones",       label: "¿Qué condiciones tienen las cuentas?" },
 ]
 
 const RESPONSES: Record<string, string> = {
-  "que-es-kiri":
-    "Kiri es una cuenta de ahorro e inversión diseñada para niños y adolescentes de 0 a 18 años. Permite a toda la familia contribuir al futuro financiero del menor en momentos especiales como cumpleaños, bautizos o comuniones. Al cumplir 18 años, el joven puede disponer de la inversión y todos sus rendimientos.",
+  "quien-declara":
+    "El titular de la cuenta es el menor, pero la responsabilidad de declarar los fondos puede recaer en el tutor legal, dependiendo del origen del dinero y la normativa fiscal vigente.",
 
-  "abrir-cuenta":
-    "Abrir una cuenta Kiri es muy sencillo. El titular adulto (padre, madre o tutor) completa el proceso de alta en nuestra plataforma asociada MyInvestor en pocos minutos. Necesitarás tu DNI y los datos del menor. Una vez verificada la identidad, la cuenta queda activa y lista para recibir aportaciones.",
+  "donacion-fiscal":
+    "Las aportaciones a la cuenta del menor pueden considerarse donaciones y estar sujetas al Impuesto sobre Sucesiones y Donaciones (ISD). La fiscalidad depende del importe, la comunidad autónoma y la relación entre donante y beneficiario. En comunidades como Madrid, Andalucía o la Comunidad Valenciana existe una bonificación del 99% para donaciones entre padres e hijos.",
 
-  "quien-puede":
-    "Cualquier persona mayor de edad puede abrir una cuenta Kiri a nombre de un menor de 0 a 18 años. Puede ser un padre, madre, abuelo, tío o incluso un amigo cercano de la familia. La cuenta la gestiona el adulto titular hasta que el menor cumpla 18 años.",
+  "irpf-menor":
+    "Sí. Los intereses o rendimientos obtenidos en la cuenta del menor están sujetos al IRPF. En las cuentas remuneradas se aplica automáticamente una retención del 19%. Las inversiones en fondos de inversión o acciones no tributan mientras no se retira el dinero. Si se superan los umbrales establecidos por la normativa, puede nacer la obligación de presentar declaración de IRPF — te recomendamos consultar a un asesor fiscal.",
 
-  "myinvestor":
-    "MyInvestor es nuestro banco colaborador y la entidad de crédito que custodia los fondos. Está respaldado por el Grupo Andbank, El Corte Inglés Seguros y AXA España, y está supervisado por el Banco de España y la CNMV. Tus ahorros están garantizados por el Fondo de Garantía de Depósitos Español.",
+  "tutor-dispone":
+    "No. El dinero depositado en la cuenta pertenece al menor y debe ser utilizado en su beneficio. El tutor administra los fondos pero no puede disponer libremente de ellos. Para operaciones de gran impacto financiero — como venta de activos o retiros importantes — puede requerirse autorización judicial.",
 
-  "regalo":
-    "La Tarjeta Regalo Kiri permite a cualquier familiar o amigo hacer una aportación económica a la cuenta del menor en un momento especial. Junto con la aportación pueden dejar un mensaje de texto, audio o vídeo que quedará guardado en la cápsula del tiempo de Kiri, para que el niño lo recuerde siempre.",
+  "obligaciones-tutor":
+    "El tutor debe asegurarse de que los impuestos derivados de la cuenta del menor sean correctamente declarados y pagados. En caso de inspección, deberá justificar el origen de los fondos. Gestiona el pago del ISD en nombre del menor, pero no puede disponer de los fondos para beneficio propio.",
 
-  "18-anos":
-    "Al cumplir 18 años el menor podrá acceder de forma autónoma a su cuenta Kiri. Podrá disponer de toda la inversión acumulada y sus rendimientos. También tendrá acceso al Álbum de los Deseos con todos los mensajes de vídeo, voz y texto que sus seres queridos fueron dejando a lo largo de los años.",
+  "mayoria-edad":
+    "Al cumplir la mayoría de edad, el menor asume el control total de la cuenta y la responsabilidad fiscal sobre los fondos y rendimientos generados. A partir de ese momento, podrá disponer libremente de la inversión acumulada y todos sus rendimientos.",
 
-  "seguridad":
-    "Tu dinero está completamente seguro. MyInvestor Banco S.A. es una entidad supervisada por el Banco de España y la CNMV. Los depósitos están cubiertos por el Fondo de Garantía de Depósitos Español, que protege hasta 100.000 € por titular. Las inversiones en fondos indexados son transparentes y reguladas.",
+  "documentos":
+    "Para abrir una cuenta a un menor necesitas: (1) DNI o NIF del menor — si el menor no tiene DNI (no obligatorio para menores de 14 años), se puede usar el NIF emitido por la Agencia Tributaria; (2) el libro de familia o documento de inscripción del menor en el registro civil; (3) el representante legal debe aportar la misma documentación que si abriera una cuenta para sí mismo.",
 
-  "kit":
-    "Al activar la cuenta Kiri, el menor recibirá un Kit de Bienvenida especial en casa. Incluye una semilla real del árbol Kiri para plantar juntos en familia y un cuento ilustrado adaptado a su edad que explica de forma divertida qué es invertir y por qué empezar pronto marca la diferencia.",
+  "productos":
+    "Los menores pueden invertir en fondos de inversión, fondos indexados, carteras de fondos indexados de gestión discrecional (Clásica, Pop, Indie, Rock y Heavy Metal), acciones y ETFs. La cuenta MyInvestor Junior permite invertir en fondos de inversión y fondos indexados. Las únicas restricciones respecto a cuentas de adultos son que los menores no pueden contratar planes de pensiones ni solicitar tarjetas de débito o crédito.",
 
-  "contribuir":
-    "¡Sí! Todos los familiares y amigos pueden contribuir a la cuenta Kiri del menor. A través de la Tarjeta Regalo pueden hacer aportaciones puntuales en ocasiones especiales: cumpleaños, Navidad, Primera Comunión, vuelta al cole o cualquier otro momento. Cada aportación puede ir acompañada de un mensaje personal.",
+  "cancelar-cuenta":
+    "Tras la cancelación de la cuenta de un menor, la disposición de valores — como fondos de inversión y carteras de gestión discrecional — debe hacerse en favor del menor titular. Aunque los padres tengan la representación legal, las posiciones en valores no pueden transferirse a la cuenta de los padres, sino a una nueva cuenta a nombre del menor. Si en la cuenta solo hay efectivo, los padres podrán disponer libremente de él.",
 
-  "app":
-    "Tanto el titular adulto como el menor (cuando tenga la edad adecuada) tienen acceso a la KiriApp. Desde la app podéis consultar el estado de la inversión, ver el crecimiento del árbol Kiri, acceder a todos los mensajes y vídeos de los seres queridos y establecer metas de ahorro. ¡Próximamente disponible en App Store y Google Play!",
+  "un-representante":
+    "No es posible añadir un segundo representante legal una vez abierta la cuenta. Si quieres que la cuenta tenga dos representantes legales, tendrás que cancelar la cuenta existente e iniciar de nuevo el proceso añadiendo la información de los dos representantes desde el principio.",
+
+  "necesito-cuenta":
+    "No. No es necesario ser cliente de MyInvestor para abrir una cuenta a un menor. Puedes abrir una cuenta para tu hijo sin tener cuenta propia. Al iniciar el proceso en la web o app, te preguntarán si deseas abrir una cuenta de un titular, de dos titulares o para un menor.",
+
+  "condiciones":
+    "Las cuentas para menores tienen las mismas características que las cuentas para mayores de edad, con dos salvedades: no pueden invertir en planes de pensiones ni solicitar tarjetas de débito o crédito. El resto de productos — fondos, carteras indexadas, acciones y ETFs — están disponibles.",
 }
 
 // ─── Keyword matcher for free-text input ─────────────────────────────────────
 
 const KEYWORD_MAP: { keys: string[]; id: string }[] = [
-  { keys: ["qué es", "que es", "kiri", "cuenta"],                    id: "que-es-kiri" },
-  { keys: ["abrir", "alta", "registro", "crear", "abro"],            id: "abrir-cuenta" },
-  { keys: ["quién", "quien", "puede", "edad", "menor", "0 a 18"],    id: "quien-puede" },
-  { keys: ["myinvestor", "banco", "entidad", "colaborador"],         id: "myinvestor" },
-  { keys: ["tarjeta", "regalo", "gift", "card"],                     id: "regalo" },
-  { keys: ["18", "dieciocho", "mayoría", "mayoria", "disponer"],     id: "18-anos" },
-  { keys: ["seguro", "seguridad", "garantía", "garantia", "fondo"],  id: "seguridad" },
-  { keys: ["kit", "bienvenida", "semilla", "cuento", "árbol"],       id: "kit" },
-  { keys: ["familiar", "familiares", "contribuir", "aportar"],       id: "contribuir" },
-  { keys: ["app", "aplicación", "aplicacion", "acceder", "acceso"],  id: "app" },
+  { keys: ["declara", "declarar", "fondos", "quien declara"],                         id: "quien-declara" },
+  { keys: ["donacion", "donación", "isd", "sucesiones", "afecta", "fiscal"],          id: "donacion-fiscal" },
+  { keys: ["irpf", "rendimiento", "intereses", "tributa", "impuesto renta"],          id: "irpf-menor" },
+  { keys: ["tutor", "disponer", "dispone", "retirar", "libre"],                       id: "tutor-dispone" },
+  { keys: ["obligacion", "obligación", "obligaciones", "responsabilidad"],            id: "obligaciones-tutor" },
+  { keys: ["18", "mayoría", "mayoria", "mayor de edad", "cumplir"],                   id: "mayoria-edad" },
+  { keys: ["documento", "documentos", "dni", "nif", "libro familia", "abrir"],        id: "documentos" },
+  { keys: ["producto", "invertir", "fondos", "etf", "acciones", "cartera"],           id: "productos" },
+  { keys: ["cancelar", "cancel", "recuperar", "dinero invertido"],                    id: "cancelar-cuenta" },
+  { keys: ["representante", "segundo", "añadir", "anadir"],                           id: "un-representante" },
+  { keys: ["necesito cuenta", "myinvestor", "cliente", "propia"],                     id: "necesito-cuenta" },
+  { keys: ["condicion", "condición", "condiciones", "restriccion", "restricción"],    id: "condiciones" },
 ]
 
 const FALLBACK =
