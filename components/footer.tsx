@@ -42,8 +42,6 @@ export default function Footer() {
   const trackRef = useRef<HTMLDivElement>(null)
   const testiRef = useRef<HTMLDivElement>(null)
   const testiInView = useInView(testiRef, { once: true, amount: 0.2 })
-  const ctaRef = useRef<HTMLDivElement>(null)
-  const ctaInView = useInView(ctaRef, { once: true, amount: 0.2 })
   const miRef = useRef<HTMLDivElement>(null)
   const miInView = useInView(miRef, { once: true, amount: 0.2 })
   return (
@@ -120,115 +118,48 @@ export default function Footer() {
         `}</style>
       </section>
 
-      {/* Reserve CTA */}
-      <section id="reserva" className="bg-primary py-24 px-8 md:px-12 lg:px-20">
-        <div ref={ctaRef} className="max-w-2xl mx-auto text-center">
-          <motion.p
-            initial={{ opacity: 0, y: 16 }}
-            animate={ctaInView ? { opacity: 1, y: 0 } : {}}
-            transition={{ duration: 0.5 }}
-            className="text-sm uppercase tracking-[0.2em] text-purple-200 font-semibold mb-3"
-          >
-            Próximamente
-          </motion.p>
-          <motion.h2
-            initial={{ opacity: 0, y: 24 }}
-            animate={ctaInView ? { opacity: 1, y: 0 } : {}}
-            transition={{ duration: 0.55, delay: 0.08 }}
-            className="font-serif text-3xl md:text-4xl lg:text-5xl font-bold text-white mb-6 text-balance"
-          >
-            Reserva tu Kiri
-          </motion.h2>
-          <motion.p
-            initial={{ opacity: 0, y: 20 }}
-            animate={ctaInView ? { opacity: 1, y: 0 } : {}}
-            transition={{ duration: 0.5, delay: 0.14 }}
-            className="text-purple-200 leading-relaxed mb-10"
-          >
-            Ya queda menos para regalar Kiri a tus seres queridos. Rellena este formulario y te informaremos cuando esté disponible.
-          </motion.p>
-          <motion.form
-            initial={{ opacity: 0, y: 28 }}
-            animate={ctaInView ? { opacity: 1, y: 0 } : {}}
-            transition={{ duration: 0.6, delay: 0.2 }}
-            className="flex flex-col gap-4 text-left max-w-md mx-auto"
-          >
-            <input
-              type="email"
-              placeholder="Correo electrónico"
-              className="w-full px-5 py-3 rounded-xl bg-white/10 border border-white/20 text-white placeholder:text-purple-300 focus:outline-none focus:ring-2 focus:ring-white/50 text-sm"
-            />
-            <div className="grid grid-cols-2 gap-4">
-              <input
-                type="text"
-                placeholder="Nombre"
-                className="w-full px-5 py-3 rounded-xl bg-white/10 border border-white/20 text-white placeholder:text-purple-300 focus:outline-none focus:ring-2 focus:ring-white/50 text-sm"
-              />
-              <input
-                type="text"
-                placeholder="Apellidos"
-                className="w-full px-5 py-3 rounded-xl bg-white/10 border border-white/20 text-white placeholder:text-purple-300 focus:outline-none focus:ring-2 focus:ring-white/50 text-sm"
-              />
-            </div>
-            <input
-              type="text"
-              placeholder="Código postal"
-              className="w-full px-5 py-3 rounded-xl bg-white/10 border border-white/20 text-white placeholder:text-purple-300 focus:outline-none focus:ring-2 focus:ring-white/50 text-sm"
-            />
-            <label className="flex items-start gap-3 text-sm text-purple-200 cursor-pointer">
-              <input type="checkbox" className="mt-0.5 accent-white" />
-              Acepto compartir mis datos y la política de privacidad
-            </label>
-            <button
-              type="submit"
-              className="w-full py-3 bg-white text-primary font-semibold rounded-xl hover:bg-purple-100 transition-colors duration-300 text-sm"
-            >
-              Enviar datos
-            </button>
-          </motion.form>
-          <p className="text-purple-300 text-sm mt-6">
-            O escríbenos a{" "}
-            <a href="mailto:marta@kiriapp.com" className="text-white underline underline-offset-4 hover:text-purple-200">
-              marta@kiriapp.com
-            </a>
-          </p>
-        </div>
-      </section>
-
       {/* MyInvestor Info */}
       <section className="bg-background px-8 md:px-12 lg:px-20 py-16 md:py-20 border-t border-border">
         <div ref={miRef} className="max-w-4xl mx-auto">
-          <motion.h3
+          <motion.div
             initial={{ opacity: 0, y: 16 }}
             animate={miInView ? { opacity: 1, y: 0 } : {}}
             transition={{ duration: 0.5 }}
-            className="font-serif text-xl md:text-2xl font-bold text-foreground mb-6"
+            className="mb-8"
           >
-            Mi Investor
-          </motion.h3>
+            <Image
+              src="/images/agente-de-my-investor.png"
+              alt="Agente de MyInvestor"
+              width={240}
+              height={60}
+              className="h-10 w-auto object-contain"
+            />
+          </motion.div>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-            {[
-              {
-                heading: "Sobre Mi Investor",
-                text: "MyInvestor es un banco experto en inversión. Está respaldado por el Grupo Andbank, El Corte Inglés Seguros, AXA España y varios family offices.",
-              },
-              {
-                heading: "Seguridad y Regulación",
-                text: "MyInvestor Banco S.A. es una entidad de crédito supervisada por el Banco de España y la CNMV. Tus ahorros con nosotros están garantizados por el Fondo de Garantía de Depósitos Español.",
-              },
-            ].map((block, i) => (
-              <motion.div
-                key={block.heading}
-                initial={{ opacity: 0, y: 24 }}
-                animate={miInView ? { opacity: 1, y: 0 } : {}}
-                transition={{ duration: 0.55, delay: 0.1 + i * 0.12 }}
-              >
-                <h4 className="font-semibold text-foreground mb-3 text-sm uppercase tracking-widest text-primary">
-                  {block.heading}
-                </h4>
-                <p className="text-muted-foreground leading-relaxed text-sm md:text-base">{block.text}</p>
-              </motion.div>
-            ))}
+            <motion.div
+              initial={{ opacity: 0, y: 24 }}
+              animate={miInView ? { opacity: 1, y: 0 } : {}}
+              transition={{ duration: 0.55, delay: 0.1 }}
+            >
+              <h4 className="font-semibold text-foreground mb-3 text-sm uppercase tracking-widest text-primary">
+                Sobre MyInvestor
+              </h4>
+              <p className="text-muted-foreground leading-relaxed text-sm md:text-base">
+                MyInvestor es un banco experto en inversión. Está respaldado por el Grupo Andbank, El Corte Inglés Seguros, AXA España y varios &ldquo;family office&rdquo;.
+              </p>
+            </motion.div>
+            <motion.div
+              initial={{ opacity: 0, y: 24 }}
+              animate={miInView ? { opacity: 1, y: 0 } : {}}
+              transition={{ duration: 0.55, delay: 0.22 }}
+            >
+              <h4 className="font-semibold text-foreground mb-3 text-sm uppercase tracking-widest text-primary">
+                Seguridad y Regulación
+              </h4>
+              <p className="text-muted-foreground leading-relaxed text-sm md:text-base">
+                MyInvestor Banco S.A. es una entidad de crédito supervisada por el Banco de España y la CNMV. Tus ahorros con nosotros están garantizados por el Fondo de Garantía de Depósitos Español.
+              </p>
+            </motion.div>
           </div>
         </div>
       </section>
@@ -250,28 +181,40 @@ export default function Footer() {
                     Kiri
                   </h3>
                   <Link
-                    href="#sobre"
+                    href="/#sobre"
                     className="text-purple-100 hover:text-white transition-colors duration-300 text-sm sm:text-base"
                   >
                     Sobre nosotros
                   </Link>
                   <Link
-                    href="#como-funciona"
+                    href="/#como-funciona"
                     className="text-purple-100 hover:text-white transition-colors duration-300 text-sm sm:text-base"
                   >
                     Cómo funciona
                   </Link>
                   <Link
-                    href="#testimonios"
+                    href="/#experiencia-kiri"
+                    className="text-purple-100 hover:text-white transition-colors duration-300 text-sm sm:text-base"
+                  >
+                    Experiencia Kiri
+                  </Link>
+                  <Link
+                    href="/regala-kiri"
+                    className="text-purple-100 hover:text-white transition-colors duration-300 text-sm sm:text-base"
+                  >
+                    Regala Kiri
+                  </Link>
+                  <Link
+                    href="/#testimonios"
                     className="text-purple-100 hover:text-white transition-colors duration-300 text-sm sm:text-base"
                   >
                     Testimonios
                   </Link>
                   <Link
-                    href="#medios"
+                    href="/kiri-en-los-medios"
                     className="text-purple-100 hover:text-white transition-colors duration-300 text-sm sm:text-base"
                   >
-                    En los Medios
+                    Kiri en los Medios
                   </Link>
                 </div>
                 <div className="flex flex-col gap-1 sm:gap-2">
@@ -291,24 +234,32 @@ export default function Footer() {
                     Términos
                   </Link>
                   <a
-                    href="mailto:marta@kiriapp.com"
+                    href="mailto:info@kiriapp.com"
                     className="text-purple-100 hover:text-white transition-colors duration-300 text-sm sm:text-base"
                   >
                     Contacto
                   </a>
                 </div>
               </div>
-              <div className="flex flex-col sm:flex-row justify-between items-start sm:items-end gap-4 sm:gap-0">
-                <div className="mt-4 sm:mt-6 lg:mt-10">
+              <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 sm:gap-6 lg:gap-12">
+                <div className="flex items-center gap-4 sm:gap-6 lg:gap-8">
                   <Image
                     src="/images/kiri-logo.svg"
                     alt="Kiri"
                     width={280}
                     height={176}
-                    className="brightness-0 invert w-32 sm:w-48 lg:w-64 h-auto"
+                    className="brightness-0 invert w-32 sm:w-40 lg:w-56 h-auto"
+                  />
+                  <div className="w-px h-20 sm:h-24 lg:h-32 bg-white/20" />
+                  <Image
+                    src="/images/agente-de-my-investor.png"
+                    alt="Agente de MyInvestor"
+                    width={320}
+                    height={80}
+                    className="brightness-0 invert h-12 sm:h-16 lg:h-20 w-auto object-contain"
                   />
                 </div>
-                <p className="text-purple-400 text-sm sm:text-base">© {new Date().getFullYear()} Kiri. Agente Financiero de MyInvestor.</p>
+                <p className="text-purple-400 text-xs sm:text-sm">© {new Date().getFullYear()} Kiri. Agente Financiero de MyInvestor.</p>
               </div>
             </div>
           </div>

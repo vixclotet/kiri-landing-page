@@ -3,6 +3,8 @@
 import { useEffect } from "react"
 import Lenis from "@studio-freight/lenis"
 import Hero from "@/components/hero"
+import SobreKiri from "@/components/sobre-kiri"
+import ExperienciaKiri from "@/components/experiencia-kiri"
 import Featured from "@/components/featured"
 import Calculator from "@/components/calculator"
 import Promo from "@/components/promo"
@@ -24,6 +26,8 @@ export default function Home() {
   return (
     <main>
       <Hero />
+      <SobreKiri />
+      <ExperienciaKiri />
       <Featured />
       <Calculator />
       <Promo />
