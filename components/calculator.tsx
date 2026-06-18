@@ -21,18 +21,20 @@ function formatEur(n: number) {
   return n.toLocaleString("de-DE")
 }
 
-type Stage = "seed" | "sapling" | "tree"
+type Stage = "seed" | "sprout" | "sapling" | "tree"
 
 function getStage(amount: number): Stage {
-  if (amount <= 175) return "seed"
-  if (amount <= 325) return "sapling"
+  if (amount <= 137) return "seed"
+  if (amount <= 237) return "sprout"
+  if (amount <= 362) return "sapling"
   return "tree"
 }
 
-const STAGE_IMAGES: Record<Stage, { src: string; alt: string; size: string }> = {
-  seed:    { src: "/images/kiri-seed.png",      alt: "Semilla Kiri",           size: "w-36 h-36 md:w-44 md:h-44" },
-  sapling: { src: "/images/kiri-sapling.png",   alt: "Árbol Kiri joven",       size: "w-48 h-48 md:w-60 md:h-60" },
-  tree:    { src: "/images/kiri-tree-full.png",  alt: "Árbol Kiri adulto en flor", size: "w-64 h-64 md:w-80 md:h-80" },
+const STAGE_IMAGES: Record<Stage, { src: string; alt: string; size: string; label: string }> = {
+  seed:    { src: "/images/kiri-seed.png",      alt: "Semilla Kiri",              size: "w-32 h-32 md:w-40 md:h-40",   label: "Semilla" },
+  sprout:  { src: "/images/kiri-sprout.png",    alt: "Árbol niño Kiri",           size: "w-40 h-40 md:w-52 md:h-52",   label: "Árbol Niño" },
+  sapling: { src: "/images/kiri-sapling.png",   alt: "Árbol joven Kiri",          size: "w-48 h-48 md:w-60 md:h-60",   label: "Árbol Joven" },
+  tree:    { src: "/images/kiri-tree-full.png",  alt: "Árbol Kiri adulto en flor", size: "w-64 h-64 md:w-80 md:h-80",   label: "Árbol Adulto" },
 }
 
 function useAnimatedNumber(target: number, duration = 420) {
@@ -125,7 +127,7 @@ export default function Calculator() {
               </motion.div>
             </AnimatePresence>
             <span className="text-xs font-semibold uppercase tracking-widest text-primary/50">
-              {stage === "seed" ? "Semilla" : stage === "sapling" ? "Árbol joven" : "Árbol adulto"}
+              {STAGE_IMAGES[stage].label}
             </span>
           </div>
 

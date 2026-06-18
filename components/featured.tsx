@@ -20,7 +20,7 @@ const slides = [
   {
     icon: Gift,
     number: "02",
-    title: "Regala en sus ocasiones especiales",
+    title: "Abre su cuenta Kiri con nuestro banco colaborador",
     bullets: [
       "Abre su cuenta Kiri con nuestro banco colaborador",
       "Kiri es Agente Financiero del banco MyInvestor",
