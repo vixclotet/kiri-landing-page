@@ -30,14 +30,14 @@ const publications = [
     date: "Febrero 2026",
     source: "Artículo 14",
     href: "https://www.articulo14.es/economia/marta-echarri-el-gran-freno-de-las-startups-femeninas-es-la-aversion-de-las-mujeres-al-riesgo-20260219.html",
-    thumbnail: "https://www.articulo14.es/images/articulo-marta-echarri.jpg",
+    thumbnail: "/images/marta-articulo14.jpg",
   },
   {
     title: "Invierte en su Futuro, Hoy | Marta Echarri | TEDxU Comillas",
     date: "Mayo 2025",
     source: "TEDx",
     href: "https://www.youtube.com/watch?v=dcTR5Dc7_a0",
-    thumbnail: "https://i.ytimg.com/vi/dcTR5Dc7_a0/maxresdefault.jpg",
+    thumbnail: "/images/marta-tedx.png",
   },
   {
     title: "Entrevista First Movers con Kiri | Capital Radio",
