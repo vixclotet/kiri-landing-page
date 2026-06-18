@@ -234,7 +234,7 @@ export default function Footer() {
                     Términos
                   </Link>
                   <a
-                    href="mailto:marta@kiriapp.com"
+                    href="mailto:info@kiriapp.com"
                     className="text-purple-100 hover:text-white transition-colors duration-300 text-sm sm:text-base"
                   >
                     Contacto
