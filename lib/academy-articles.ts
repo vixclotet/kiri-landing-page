@@ -1,10 +1,22 @@
 export type KiriCategory = "raices" | "tronco" | "frutos" | "bosque"
 
+export type AgeRange = "3-5" | "6-8" | "9-11" | "12-14" | "15-18" | "19-22"
+
+export const AGE_RANGES: AgeRange[] = ["3-5", "6-8", "9-11", "12-14", "15-18", "19-22"]
+
+export const ADRIANA = {
+  name: "Adriana Jaureguizar",
+  role: "Directora de Kiri Academy",
+  avatar: "/images/adriana-jaureguizar.png",
+  bio: "Especialista en educación financiera infantil y juvenil. Adriana lidera el proyecto pedagógico de Kiri Academy, combinando evidencia científica sobre el desarrollo cognitivo con estrategias prácticas para que las familias hablen de dinero de forma natural.",
+}
+
 export type Article = {
   slug: string
   icon: string
   category: string
   kiriCategory: KiriCategory
+  ageRange: AgeRange
   title: string
   excerpt: string
   readTime: string
@@ -24,6 +36,7 @@ export const ARTICLES: Article[] = [
     icon: "Scale",
     category: "Fundamentos",
     kiriCategory: "raices",
+    ageRange: "6-8" as AgeRange,
     title: "Necesidades vs. Deseos: La Brújula Financiera de Nuestros Hijos",
     excerpt:
       "¿Alguna vez has visto esa mirada de tu peque frente a un juguete nuevo, acompañada de un «¡Lo quiero!»? Una oportunidad de oro para enseñarles a diferenciar lo que necesitamos para vivir de lo que queremos.",
@@ -105,6 +118,7 @@ export const ARTICLES: Article[] = [
     icon: "Sprout",
     category: "Inicio",
     kiriCategory: "raices",
+    ageRange: "3-5" as AgeRange,
     title: "Introducción a la Educación Financiera en Casa",
     excerpt:
       "¿Cuál es el mejor momento para empezar a hablar de dinero con tus hijos? La respuesta es más sencilla de lo que imaginas: ahora mismo. Recursos y estrategias adaptados por edades.",
@@ -179,6 +193,7 @@ export const ARTICLES: Article[] = [
     icon: "Users",
     category: "Comportamiento",
     kiriCategory: "raices",
+    ageRange: "3-5" as AgeRange,
     title: "Modelado de Comportamiento Financiero: Sé un Buen Ejemplo",
     excerpt:
       "Nuestros hijos son esponjas brillantes que absorben todo lo que ven. La tierra más fértil para que los conceptos financieros crezcan en la mente de tu hijo eres tú.",
@@ -247,6 +262,7 @@ export const ARTICLES: Article[] = [
     icon: "BookOpen",
     category: "Fundamentos",
     kiriCategory: "raices",
+    ageRange: "3-5" as AgeRange,
     title: "¿A qué edad hablar de dinero con tus hijos?",
     excerpt:
       "Muchos padres esperan «el momento adecuado» para hablar de finanzas. La neurociencia nos dice que ese momento es mucho antes de lo que creemos.",
@@ -307,6 +323,7 @@ export const ARTICLES: Article[] = [
     icon: "PiggyBank",
     category: "Ahorro",
     kiriCategory: "tronco",
+    ageRange: "6-8" as AgeRange,
     title: "El Arte de Ahorrar: La Hucha Mágica",
     excerpt:
       "El impulso de gastar y obtener una recompensa inmediata es fuerte en niños y adultos. Descubre cómo convertir el ahorro en un hábito natural y emocionante desde edades tempranas.",
@@ -378,6 +395,7 @@ export const ARTICLES: Article[] = [
     icon: "TrendingUp",
     category: "Inversión",
     kiriCategory: "tronco",
+    ageRange: "12-14" as AgeRange,
     title: "La Magia del Interés Compuesto: El Árbol que da Más Frutos",
     excerpt:
       "Imagina un árbol que no solo crece, sino que produce semillas que se siembran solas, creando nuevos árboles sin que tú hagas nada. Esa es exactamente la magia del interés compuesto.",
@@ -440,6 +458,7 @@ export const ARTICLES: Article[] = [
     icon: "BookOpen",
     category: "Inversión",
     kiriCategory: "tronco",
+    ageRange: "12-14" as AgeRange,
     title: "La Diferencia entre Activos y Pasivos",
     excerpt:
       "En el mundo de las finanzas, hay una distinción crucial entre lo que pone dinero en tu bolsillo y lo que lo saca. Enseña a tus hijos esta diferencia desde pequeños.",
@@ -494,6 +513,7 @@ export const ARTICLES: Article[] = [
     icon: "TrendingUp",
     category: "Inversión",
     kiriCategory: "tronco",
+    ageRange: "15-18" as AgeRange,
     title: "¿Qué es un Fondo de Inversión Indexado y por qué es ideal para niños?",
     excerpt:
       "Los fondos indexados son la herramienta de inversión más recomendada por los expertos para el largo plazo. Te explicamos cómo funcionan con palabras que hasta un niño puede entender.",
@@ -552,6 +572,7 @@ export const ARTICLES: Article[] = [
     icon: "Target",
     category: "Objetivos",
     kiriCategory: "frutos",
+    ageRange: "9-11" as AgeRange,
     title: "Sembrando Sueños: Ahorro por Objetivos",
     excerpt:
       "¿Tu hijo sueña con el último videojuego, un viaje a Eurodisney o una bicicleta especial? Cuando los niños tienen un objetivo claro, descubren la motivación perfecta para ahorrar con propósito.",
@@ -614,6 +635,7 @@ export const ARTICLES: Article[] = [
     icon: "TreePine",
     category: "Metáforas",
     kiriCategory: "frutos",
+    ageRange: "6-8" as AgeRange,
     title: "La Metáfora del Árbol y el Dinero",
     excerpt:
       "Imagínate una semilla diminuta con un potencial inmenso. Con tiempo y cuidado, esa semilla se convierte en un árbol majestuoso. Lo mismo ocurre con el dinero cuando se planta pronto.",
@@ -672,6 +694,7 @@ export const ARTICLES: Article[] = [
     icon: "Target",
     category: "Objetivos",
     kiriCategory: "frutos",
+    ageRange: "9-11" as AgeRange,
     title: "Cómo Establecer Metas de Ahorro con tus Hijos en 5 Pasos",
     excerpt:
       "Las metas de ahorro no se imponen, se construyen juntos. Una guía práctica para que el proceso sea motivador, realista y educativo a la vez.",
@@ -736,6 +759,7 @@ export const ARTICLES: Article[] = [
     icon: "Heart",
     category: "Valores",
     kiriCategory: "bosque",
+    ageRange: "6-8" as AgeRange,
     title: "Ser Generoso: Entender que el Dinero También Sirve para Ayudar",
     excerpt:
       "La semilla de la generosidad: cuando pensamos en dinero, a veces olvidamos que es también una herramienta para crear impacto positivo en el mundo.",
@@ -784,6 +808,7 @@ export const ARTICLES: Article[] = [
     icon: "Scale",
     category: "Errores",
     kiriCategory: "bosque",
+    ageRange: "19-22" as AgeRange,
     title: "Errores Comunes en la Educación Financiera Infantil y Cómo Evitarlos",
     excerpt:
       "Como jardineros de Kiri, es fundamental identificar las malas hierbas que pueden sabotear el crecimiento financiero de nuestros hijos. Conocerlos nos ayuda a garantizar que el jardín florezca.",
@@ -851,6 +876,7 @@ export const ARTICLES: Article[] = [
     icon: "TreePine",
     category: "Valores",
     kiriCategory: "bosque",
+    ageRange: "12-14" as AgeRange,
     title: "La Cultura del Ahorro en Familia: Cómo Crear un Proyecto Común",
     excerpt:
       "El ahorro no es una obligación individual: puede ser el proyecto más ilusionante que una familia comparta. Te explicamos cómo construir esa cultura desde cero.",
