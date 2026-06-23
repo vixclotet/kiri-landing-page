@@ -30,6 +30,7 @@ const NAV_LINKS = [
   { label: "La Experiencia", href: "/#experiencia-kiri" },
   { label: "Calculadora",    href: "/#calculadora" },
   { label: "Kiri Academy",   href: "/kiri-academy" },
+  { label: "Juegos",         href: "/kiri-academy/juegos" },
 ]
 
 function DropdownMenu({
@@ -97,6 +98,7 @@ export default function Header() {
   const pathname = usePathname()
   const isSecondaryPage =
     pathname === "/kiri-academy" ||
+    pathname.startsWith("/kiri-academy/") ||
     pathname === "/kiri-en-los-medios" ||
     pathname === "/regala-kiri"
   const [menuOpen, setMenuOpen] = useState(false)
