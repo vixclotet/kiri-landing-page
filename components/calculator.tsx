@@ -18,6 +18,16 @@ function calcFV(monthly: number) {
   return { total: Math.round(fv), contributed: Math.round(contributed), returns: Math.round(returns) }
 }
 
+function getEquivalence(total: number): string {
+  if (total < 5000) return "el equivalente a un viaje en familia a Disneyland París."
+  if (total < 10000) return "suficiente para comprarse un coche nuevo."
+  if (total < 18000) return "más que un año de universidad en el extranjero, matrículas incluidas."
+  if (total < 30000) return "suficiente para dar la entrada de un piso."
+  if (total < 50000) return "más que el salario de 2 años de un recién graduado."
+  if (total < 80000) return "suficiente para montar su propio negocio desde cero."
+  return "suficiente para comprar un piso en muchas ciudades de España."
+}
+
 function formatEur(n: number) {
   return n.toLocaleString("de-DE")
 }
@@ -115,6 +125,7 @@ export default function Calculator() {
   const [monthly, setMonthly] = useState(50)
   const { total, contributed, returns } = calcFV(monthly)
   const stage = getStage(monthly)
+  const equivalence = getEquivalence(total)
 
   useConfettiOnTree(stage)
 
@@ -218,6 +229,14 @@ export default function Calculator() {
               <p className="text-sm text-muted-foreground mt-3">
                 aportando{" "}
                 <strong className="text-foreground">{monthly} €/mes</strong>
+              </p>
+              <p className="text-sm text-muted-foreground mt-4 leading-relaxed max-w-xs mx-auto">
+                Por la magia del interés compuesto, si inviertes{" "}
+                <strong className="text-foreground">{monthly} €</strong> de forma mensual desde que el niño nace, hasta que cumple los 18 años, su árbol Kiri le dará{" "}
+                <strong className="text-primary">{formatEur(total)} €</strong>.
+              </p>
+              <p className="text-xs text-primary/70 font-medium mt-2 italic">
+                Es {equivalence}
               </p>
             </div>
 

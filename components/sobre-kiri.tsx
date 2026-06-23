@@ -18,7 +18,7 @@ const cards = [
       "En su cumpleaños, bautizo, primera comunión, confirmación, vuelta al colegio, comienza a contribuir para garantizarles un futuro financiero mejor.",
   },
   {
-    image: "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/reloj-de-arena-rosa-qvqkDKTQhN5kLLG5EocE1eNMQn9YeI.png",
+    image: "/images/hourglass.png",
     title: "Invierte en su futuro",
     description:
       "Los menores podrán establecer metas de ahorro y a los 18 años podrán disponer de la inversión y sus rendimientos.",
@@ -58,7 +58,7 @@ export default function SobreKiri() {
               transition={{ duration: 0.6, delay: 0.1 + i * 0.12, ease: [0.22, 1, 0.36, 1] }}
               className="flex flex-col items-center text-center gap-6 p-8 rounded-3xl border border-border bg-background hover:shadow-md transition-shadow duration-300"
             >
-              <div className="w-28 h-28 rounded-2xl bg-primary/5 flex items-center justify-center overflow-hidden flex-shrink-0">
+              <div className="w-32 h-32 rounded-full bg-primary/5 flex items-center justify-center overflow-hidden flex-shrink-0">
                 <Image
                   src={card.image}
                   alt={card.title}
